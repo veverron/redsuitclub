@@ -31,9 +31,14 @@
   #title{position:absolute;inset:0;z-index:20;overflow:hidden;background:#0b1240;cursor:pointer;transition:opacity .5s}
   #title .blur{position:absolute;inset:-40px;background-size:cover;background-position:center;filter:blur(22px) brightness(.8)}
   #title img{position:absolute;left:50%;top:0;height:941px;transform:translateX(-50%);display:block}
-  #title .go{position:absolute;left:50%;transform:translateX(-50%);bottom:18px;white-space:nowrap;padding:14px 28px;background:rgba(8,6,24,.78);border:3px solid #ffe14d;border-radius:6px;font-size:30px;color:#ffe14d;
-    text-shadow:-3px 0 #000,3px 0 #000,0 -3px #000,0 3px #000,4px 4px 0 #a3201c;animation:blink 1.1s steps(2,start) infinite}
-  @keyframes blink{50%{opacity:.15}}
+  #title .go{position:absolute;left:50%;transform:translateX(-50%);bottom:22px;white-space:nowrap;cursor:pointer;
+    font:inherit;font-size:36px;letter-spacing:2px;color:#ffe14d;padding:22px 54px 24px;
+    background:linear-gradient(#ff5a3c 0%,#d3201a 48%,#a3100f 52%,#7d0a0c 100%);
+    border:5px solid #1a0505;border-radius:4px;
+    box-shadow:inset 4px 4px 0 #ff9d86,inset -4px -4px 0 #4f0507,0 0 0 4px #ffe14d,0 0 0 8px #1a0505,0 10px 0 8px #000;
+    text-shadow:-3px 0 #000,3px 0 #000,0 -3px #000,0 3px #000,3px 3px 0 #000,-3px -3px 0 #000,-3px 3px 0 #000,3px -3px 0 #000}
+  #title .go:hover{filter:brightness(1.18)}
+  #title .go:active{transform:translateX(-50%) translateY(6px);box-shadow:inset -4px -4px 0 #ff9d86,inset 4px 4px 0 #4f0507,0 0 0 4px #ffe14d,0 0 0 8px #1a0505,0 4px 0 8px #000}
   #rot{position:fixed;left:0;right:0;bottom:8px;text-align:center;color:#aaa;font:14px sans-serif;display:none}
 </style>
 </head>
@@ -56,7 +61,7 @@
     <button class="verb" style="left:245px;top:876px" data-verb="Vedä">Vedä</button>
     <div id="inv"><div class="lbl">INVENTAARIO</div></div>
     <div id="mute" title="Musiikki">🔊</div>
-    <div id="title"><div class="blur" id="titleblur"></div><img id="titleimg" alt="Red Suit Event"><div class="go">▶ KLIKKAA ALOITTAAKSESI</div></div>
+    <div id="title"><div class="blur" id="titleblur"></div><img id="titleimg" alt="Red Suit Event"><button class="go" id="startbtn">ALOITA PELI</button></div>
     <div id="win"><h1>IL TRENO<br>LÄPÄISTY</h1><button id="again">Uudestaan</button></div>
   </div>
 </div>
@@ -573,7 +578,7 @@ Promise.all([ loadImg(ASSETS.bg), loadImg(ASSETS.walk), loadImg(ASSETS.stand), l
   document.getElementById('titleimg').src = ASSETS.title;
   document.getElementById('titleblur').style.backgroundImage = 'url(' + ASSETS.title + ')';
   let started = false;
-  ti.addEventListener('pointerdown', e => {
+  document.getElementById('startbtn').addEventListener('click', e => {
     e.stopPropagation();
     if (started) return; started = true;
     Music.start();
